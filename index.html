@@ -1,16 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <link rel="stylesheet" href=".//css/style.cs">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/c9edb35f30.js" crossorigin="anonymous"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <link rel="stylesheet" href=".//css/style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://kit.fontawesome.com/c9edb35f30.js"
+      crossorigin="anonymous"
+    ></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    
+  </head>
+  <body>
+    <div class="searching">
+      <div class="searchcontainer">
+        <h1><span id="M">M</span>ovies<span id="N">N</span>ews</h1>
+        <form class="d-flex" role="search">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+            id="search-input"
+          />
+          <button class="btn btn-outline-success" type="button" id="search-button">Search</button>
+          <button class="btn btn-outline-success d-none" type="button" id="back-button">Back</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="py-5">
+        <button type="button" class="btn btn-light" id="latest-movies">Latest</button>
+      <div class="container" id="movies-container">
+        <div id="" class="row bg-light gap-2 justify-content-center">
+          <div
+            class="card col-12 col-sm-6 col-md-3 col-lg-2 text-center shadow bg-body-tertiary rounded object-fit-cover p-0"
+          >
+            <div class="card-img-container">
+              <img
+                src="https://media.themoviedb.org/t/p/w220_and_h330_face/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg"
+                class="card-img-top"
+                alt="..."
+                id="card-img"
+              />
+            </div>
+
+            <div class="card-body">
+              <p class="card-text fw-bold title m-1 p-0">Inside out 2</p>
+              <p class="card-text date m-1 p-0">Jun 11, 2024</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <script src=".//JS/main.js"></script>
-</body>
+  </body>
 </html>
