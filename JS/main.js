@@ -1,4 +1,5 @@
 // golbal variables
+var color_taken = localStorage.getItem("color");
 var pageIndex = 1;
 const options = {
   method: "GET",
@@ -107,58 +108,58 @@ button.onclick = async () => {
   }
 };
 
-var lastestButton = document.querySelector("#latest-movies");
-lastestButton.onclick = () => {
-  fetch("https://api.themoviedb.org/3/movie/latest", options)
-    .then((response) => response.json())
-    .then((response) => response)
-    .then((data) => {
-      console.log(data);
-      let moviesContainer = document.querySelector("#movies-container");
-      moviesContainer.className = "container w-100";
-      moviesContainer.innerHTML = "";
-      let moviesPageContainer = document.createElement("div");
-      moviesPageContainer.className =
-        "row bg-light gap-2 justify-content-center";
-      moviesPageContainer.innerHTML = "";
-      // moviesPageContainer.id = `page#${pageIndex}`;
-      console.log(data.results[0].poster_path);
-      for (let i = 0; i < data.results.length; i++) {
-        console.log("here");
-        let movieItem = document.createElement("div");
-        movieItem.className =
-          "card col-12 col-sm-6 col-md-3 col-lg-2 text-center shadow bg-body-tertiary rounded object-fit-cover p-0";
-        let movieImgContainer = document.createElement("div");
-        movieImgContainer.className = "card-img-container";
-        let movieImg = document.createElement("img");
-        movieImg.id = "card-img";
-        movieImg.className = "card-img-top";
-        //  let request = `https://api.themoviedb.org/3/movie/${data.results[i].id}/images?include_image_language=en&language=english`;
-        //  let imgPath = await ApiCall(request, optionsGet);
-        movieImg.src = `https://media.themoviedb.org/t/p/w220_and_h330_face${data.results[i].poster_path}`;
-        movieImgContainer.appendChild(movieImg);
-        movieItem.appendChild(movieImgContainer);
+// var lastestButton = document.querySelector("#latest-movies");
+// lastestButton.onclick = () => {
+//   fetch("https://api.themoviedb.org/3/movie/latest", options)
+//     .then((response) => response.json())
+//     .then((response) => response)
+//     .then((data) => {
+//       console.log(data);
+//       let moviesContainer = document.querySelector("#movies-container");
+//       moviesContainer.className = "container w-100";
+//       moviesContainer.innerHTML = "";
+//       let moviesPageContainer = document.createElement("div");
+//       moviesPageContainer.className =
+//         "row bg-light gap-2 justify-content-center";
+//       moviesPageContainer.innerHTML = "";
+//       // moviesPageContainer.id = `page#${pageIndex}`;
+//       console.log(data.results[0].poster_path);
+//       for (let i = 0; i < data.results.length; i++) {
+//         console.log("here");
+//         let movieItem = document.createElement("div");
+//         movieItem.className =
+//           "card col-12 col-sm-6 col-md-3 col-lg-2 text-center shadow bg-body-tertiary rounded object-fit-cover p-0";
+//         let movieImgContainer = document.createElement("div");
+//         movieImgContainer.className = "card-img-container";
+//         let movieImg = document.createElement("img");
+//         movieImg.id = "card-img";
+//         movieImg.className = "card-img-top";
+//         //  let request = `https://api.themoviedb.org/3/movie/${data.results[i].id}/images?include_image_language=en&language=english`;
+//         //  let imgPath = await ApiCall(request, optionsGet);
+//         movieImg.src = `https://media.themoviedb.org/t/p/w220_and_h330_face${data.results[i].poster_path}`;
+//         movieImgContainer.appendChild(movieImg);
+//         movieItem.appendChild(movieImgContainer);
 
-        let cardBody = document.createElement("div");
-        cardBody.className = "card-body";
-        let cardTitle = document.createElement("p");
-        cardTitle.className = "card-text fw-bold title m-1 p-0";
-        cardTitle.innerHTML = data.results[i].title;
-        cardBody.appendChild(cardTitle);
+//         let cardBody = document.createElement("div");
+//         cardBody.className = "card-body";
+//         let cardTitle = document.createElement("p");
+//         cardTitle.className = "card-text fw-bold title m-1 p-0";
+//         cardTitle.innerHTML = data.results[i].title;
+//         cardBody.appendChild(cardTitle);
 
-        let cardReleaseDate = document.createElement("p");
-        cardReleaseDate.className = "card-text date m-1 p-0";
-        //    let releaseDateRequest = `https://api.themoviedb.org/3/movie/${data.results[i].id}/release_dates`;
-        //    let releaseDate = await ApiCall(releaseDateRequest, optionsGet);
-        cardReleaseDate.innerHTML = data.results[i].release_date;
-        cardBody.appendChild(cardReleaseDate);
-        movieItem.appendChild(cardBody);
-        moviesPageContainer.appendChild(movieItem);
-      }
-      moviesContainer.appendChild(moviesPageContainer);
-    })
-    .catch((err) => console.error(err));
-};
+//         let cardReleaseDate = document.createElement("p");
+//         cardReleaseDate.className = "card-text date m-1 p-0";
+//         //    let releaseDateRequest = `https://api.themoviedb.org/3/movie/${data.results[i].id}/release_dates`;
+//         //    let releaseDate = await ApiCall(releaseDateRequest, optionsGet);
+//         cardReleaseDate.innerHTML = data.results[i].release_date;
+//         cardBody.appendChild(cardReleaseDate);
+//         movieItem.appendChild(cardBody);
+//         moviesPageContainer.appendChild(movieItem);
+//       }
+//       moviesContainer.appendChild(moviesPageContainer);
+//     })
+//     .catch((err) => console.error(err));
+// };
 
 function chaningingImgs(index) {
 
@@ -182,6 +183,55 @@ function chaningingImgs(index) {
 
 let data = [];
 
+function loadImgDescrption(data,index){
+  
+  let description = document.createElement("div");
+  description.className = "description";
+  
+  let img = document.createElement("img");
+  img.src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${data.results[index].backdrop_path}`;
+  img.className = "description-bg";
+
+  let darkLayer = document.createElement("div");
+  darkLayer.className = "dark-layer";
+  
+  description.appendChild(img);
+  description.appendChild(darkLayer);
+  
+  let descriptionContent = document.createElement("div");
+  descriptionContent.className = "description-content";
+  
+  let title = document.createElement("p");
+  title.className = "title";
+  title.innerHTML = data.results[index].title;
+  descriptionContent.appendChild(title);
+  
+  let dateContainer = document.createElement("div");
+  dateContainer.className = "date-container";
+
+  let rate = document.createElement("p");
+  rate.className = "rate";
+  rate.innerHTML = data.results[index].vote_average;
+  dateContainer.appendChild(rate);
+  
+  let descriptionData = document.createElement("p");
+  descriptionData.className = "data";
+  descriptionData.innerHTML = data.results[index].release_date;
+  dateContainer.appendChild(descriptionData);
+
+  descriptionContent.appendChild(dateContainer);
+
+  let descriptionText = document.createElement("p");
+  descriptionText.className = "description-text";
+  descriptionText.innerHTML = data.results[index].overview;
+
+  descriptionContent.appendChild(descriptionText);
+
+  description.appendChild(descriptionContent);
+
+
+  return description
+}
 
 function loadTrendingData(){
 fetch(
@@ -206,7 +256,7 @@ fetch(
         "card col-12 col-sm-6 col-md-3 col-lg-2 text-center shadow bg-body-tertiary rounded object-fit-cover p-0";
       let movieImgContainer = document.createElement("div");
       movieImgContainer.className = "card-img-container";
-      movieImgContainer.onmouseover = () => chaningingImgs(data.results[i].id);
+      // movieImgContainer.onmouseover = () => chaningingImgs(data.results[i].id);
       let movieImg = document.createElement("img");
       movieImg.id = data.results[i].id;
       movieImg.className = "card-img-top";
@@ -230,7 +280,10 @@ fetch(
       cardReleaseDate.innerHTML = data.results[i].release_date;
       cardBody.appendChild(cardReleaseDate);
       movieItem.appendChild(cardBody);
+      movieItem.appendChild(loadImgDescrption(data, i));
       moviesPageContainer.appendChild(movieItem);
+
+
     }
     moviesContainer.appendChild(moviesPageContainer);
   })
@@ -238,3 +291,18 @@ fetch(
 
 }
 loadTrendingData();
+
+
+const settingsIcon = document.querySelector("#settings-icon");
+const colorsContainer = document.querySelector(".setting");
+document.documentElement.style.setProperty("--second-color", color_taken);
+settingsIcon.onclick = function () {
+  colorsContainer.classList.toggle("visible");
+};
+ document.querySelectorAll(".color").forEach((item) => {
+   item.addEventListener("click", (event) => {
+     const color = event.target.getAttribute("data-color");
+     document.documentElement.style.setProperty("--second-color", color);
+     localStorage.setItem("color", color);
+   });
+ });

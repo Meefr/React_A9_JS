@@ -22,6 +22,29 @@
     <title>Document</title>
   </head>
   <body>
+    <div class="setting">
+      <div class="content">
+        <div class="icon">
+          <i class="fa-solid fa-gear" id="settings-icon"></i>
+        </div>
+
+        <div class="colors-container">
+          <div class="container">
+            <p id="pick-color">Pick Your Color:</p>
+            <div class="row">
+              <div class="col-3 color bg-light" data-color="#f0f0f0"></div>
+              <div class="col-3 color bg-red" data-color="#FF30A9"></div>
+              <div class="col-3 color bg-blue" data-color="#3078FF"></div>
+              <div class="col-3 color bg-green" data-color="#30FFA9"></div>
+              <div class="col-3 color bg-yellow" data-color="#FCFF30"></div>
+              <div class="col-3 color bg-orange" data-color="#FF9E30"></div>
+              <div class="col-3 color bg-purple" data-color="#BD30FF"></div>
+              <div class="col-3 color bg-pink" data-color="#FF9E30"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="searching">
       <div class="searchcontainer">
         <h1><span id="M">M</span>ovies<span id="N">N</span>ews</h1>
@@ -33,14 +56,25 @@
             aria-label="Search"
             id="search-input"
           />
-          <button class="btn btn-outline-success" type="button" id="search-button">Search</button>
-          <button class="btn btn-outline-success d-none" type="button" id="back-button">Back</button>
+          <button
+            class="btn btn-outline-success"
+            type="button"
+            id="search-button"
+          >
+            Search
+          </button>
+          <button
+            class="btn btn-outline-success d-none"
+            type="button"
+            id="back-button"
+          >
+            Back
+          </button>
         </form>
       </div>
     </div>
 
     <div class="py-5">
-        <button type="button" class="btn btn-light" id="latest-movies">Latest</button>
       <div class="container" id="movies-container">
         <div id="" class="row bg-light gap-2 justify-content-center">
           <div
@@ -59,10 +93,93 @@
               <p class="card-text fw-bold title m-1 p-0">Inside out 2</p>
               <p class="card-text date m-1 p-0">Jun 11, 2024</p>
             </div>
+
+            <div
+              class="movieDetails position-absolute d-flex flex-column justify-content-around"
+            >
+              <img
+                src="https://image.tmdb.org/t/p/w500//stKGOm8UyhuLPR9sZLjs5AkmncA.jpg"
+                class="w-100 h-100 position-absolute"
+              />
+              <div class="">
+                <h3 class="main-text text-center">Inside Out 2</h3>
+                <span class="me-3">7.689</span>
+                <span>2024-06-11</span>
+
+                <p>
+                  Teenager Riley's mind headquarters is undergoing a sudden
+                  demolition to make room for something entirely unexpected: new
+                  Emotions! Joy, Sadness, Anger, Fear and Disgust, who’ve long
+                  been running a successful operation by all accounts, aren’t
+                  sure how to feel when Anxiety shows up. And it looks like
+                  she’s not alone.
+                </p>
+              </div>
+              <div class="play d-flex justify-content-center">
+                <button
+                  class="rounded-circle d-flex align-items-center justify-content-center"
+                >
+                  <i class="fa fa-play fa-3x"></i>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+    <div class="container">
+      <div class="contactUs">
+        <div class="header">
+          <p>Contact us</p>
+        </div>
+        <div class="inputs">
+          <input
+            id="userName"
+            class="form-control"
+            type="text"
+            placeholder="Enter your name"
+            aria-label="default input example"
+          />
+          <input
+            id="userEmail"
+            class="form-control"
+            type="text"
+            placeholder="Enter your email"
+            aria-label="default input example"
+          />
+          <input
+            id="userPhone"
+            class="form-control"
+            type="text"
+            placeholder="Enter your phone"
+            aria-label="default input example"
+          />
+          <input
+            id="userAge"
+            class="form-control"
+            type="text"
+            placeholder="Enter your age"
+            aria-label="default input example"
+          />
+          <input
+            id="userPassword"
+            class="form-control"
+            type="text"
+            placeholder="Enter your password"
+            aria-label="default input example"
+          />
+          <input
+            id="userPasswordValidation"
+            class="form-control"
+            type="text"
+            placeholder="Validate your password"
+            aria-label="default input example"
+          />
+        </div>
+      </div>
+    </div>
+
     <script src=".//JS/main.js"></script>
   </body>
 </html>
