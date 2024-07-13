@@ -1,5 +1,7 @@
 :root{
-    --second-color:#01B4E4
+    --second-color:#01B4E4;
+    --alert-color:#F8D7DA;
+    --alert-text-color:#9D3D29;
 }
 body{
     background-color: var(--second-color);
@@ -205,14 +207,41 @@ body{
     text-align: center;
     justify-content: space-between;
 }
-.contactUs p{
+#input-title{
     font-size: 2rem;
     color: var(--second-color);
     font-weight: bold;
-    
+    text-align: center;
 }
 .inputs{
     display: flex;
     flex-direction: column;
     gap: 15px;
+    padding: 30px;
+    width: 60%;
+    margin: 0 auto;
+    padding-bottom: 80px;
+}
+
+
+.input{
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+}
+.input-alert{
+    font-weight: bold;
+    font-size: 1.5em;
+    padding: 30px;
+    text-align: center;
+    background-color: var(--alert-color);
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: 5px;
+    color: var(--alert-text-color);
+    transition: display 0.5s ease;
+    /* display: none; */
 }

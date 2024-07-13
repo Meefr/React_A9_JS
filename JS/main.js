@@ -19,15 +19,15 @@ async function ApiCall(request, options) {
 
 var button = document.querySelector("#search-button");
 button.onclick = async () => {
-    let backButton = document.querySelector("#back-button");
-    backButton.classList.replace("d-none","d-felx");
-    input
-    backButton.onclick = ()=>{
-        backButton.classList.replace("d-felx", "d-none");
-          let input = document.querySelector("#search-input");
-          input.value = "";
-        loadTrendingData();
-    }
+  let backButton = document.querySelector("#back-button");
+  backButton.classList.replace("d-none", "d-felx");
+  input;
+  backButton.onclick = () => {
+    backButton.classList.replace("d-felx", "d-none");
+    let input = document.querySelector("#search-input");
+    input.value = "";
+    loadTrendingData();
+  };
   var input = document.querySelector("#search-input").value;
   if (input.length >= 3) {
     const options = {
@@ -162,7 +162,6 @@ button.onclick = async () => {
 // };
 
 function chaningingImgs(index) {
-
   fetch(
     `https://api.themoviedb.org/3/movie/${index}/images?include_image_language=en&language=english`,
     options
@@ -183,29 +182,28 @@ function chaningingImgs(index) {
 
 let data = [];
 
-function loadImgDescrption(data,index){
-  
+function loadImgDescrption(data, index) {
   let description = document.createElement("div");
   description.className = "description";
-  
+
   let img = document.createElement("img");
   img.src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${data.results[index].backdrop_path}`;
   img.className = "description-bg";
 
   let darkLayer = document.createElement("div");
   darkLayer.className = "dark-layer";
-  
+
   description.appendChild(img);
   description.appendChild(darkLayer);
-  
+
   let descriptionContent = document.createElement("div");
   descriptionContent.className = "description-content";
-  
+
   let title = document.createElement("p");
   title.className = "title";
   title.innerHTML = data.results[index].title;
   descriptionContent.appendChild(title);
-  
+
   let dateContainer = document.createElement("div");
   dateContainer.className = "date-container";
 
@@ -213,7 +211,7 @@ function loadImgDescrption(data,index){
   rate.className = "rate";
   rate.innerHTML = data.results[index].vote_average;
   dateContainer.appendChild(rate);
-  
+
   let descriptionData = document.createElement("p");
   descriptionData.className = "data";
   descriptionData.innerHTML = data.results[index].release_date;
@@ -229,69 +227,65 @@ function loadImgDescrption(data,index){
 
   description.appendChild(descriptionContent);
 
-
-  return description
+  return description;
 }
 
-function loadTrendingData(){
-fetch(
-  "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
-  options
-)
-  .then((response) => response.json())
-  .then((response) => response)
-  .then((data) => {
-    let moviesContainer = document.querySelector("#movies-container");
-    moviesContainer.className = "container w-100";
-    moviesContainer.innerHTML = "";
-    let moviesPageContainer = document.createElement("div");
-    moviesPageContainer.className = "row bg-light gap-2 justify-content-center";
-    moviesPageContainer.innerHTML = "";
-    // moviesPageContainer.id = `page#${pageIndex}`;
-    console.log(data.results[0].poster_path);
-    for (let i = 0; i < data.results.length; i++) {
-      console.log("here");
-      let movieItem = document.createElement("div");
-      movieItem.className =
-        "card col-12 col-sm-6 col-md-3 col-lg-2 text-center shadow bg-body-tertiary rounded object-fit-cover p-0";
-      let movieImgContainer = document.createElement("div");
-      movieImgContainer.className = "card-img-container";
-      // movieImgContainer.onmouseover = () => chaningingImgs(data.results[i].id);
-      let movieImg = document.createElement("img");
-      movieImg.id = data.results[i].id;
-      movieImg.className = "card-img-top";
-      //  let request = `https://api.themoviedb.org/3/movie/${data.results[i].id}/images?include_image_language=en&language=english`;
-      //  let imgPath = await ApiCall(request, optionsGet);
-      movieImg.src = `https://media.themoviedb.org/t/p/w220_and_h330_face${data.results[i].poster_path}`;
-      movieImgContainer.appendChild(movieImg);
-      movieItem.appendChild(movieImgContainer);
+function loadTrendingData() {
+  fetch(
+    "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
+    options
+  )
+    .then((response) => response.json())
+    .then((response) => response)
+    .then((data) => {
+      let moviesContainer = document.querySelector("#movies-container");
+      moviesContainer.className = "container w-100";
+      moviesContainer.innerHTML = "";
+      let moviesPageContainer = document.createElement("div");
+      moviesPageContainer.className =
+        "row bg-light gap-2 justify-content-center";
+      moviesPageContainer.innerHTML = "";
+      // moviesPageContainer.id = `page#${pageIndex}`;
+      console.log(data.results[0].poster_path);
+      for (let i = 0; i < data.results.length; i++) {
+        console.log("here");
+        let movieItem = document.createElement("div");
+        movieItem.className =
+          "card col-12 col-sm-6 col-md-3 col-lg-2 text-center shadow bg-body-tertiary rounded object-fit-cover p-0";
+        let movieImgContainer = document.createElement("div");
+        movieImgContainer.className = "card-img-container";
+        // movieImgContainer.onmouseover = () => chaningingImgs(data.results[i].id);
+        let movieImg = document.createElement("img");
+        movieImg.id = data.results[i].id;
+        movieImg.className = "card-img-top";
+        //  let request = `https://api.themoviedb.org/3/movie/${data.results[i].id}/images?include_image_language=en&language=english`;
+        //  let imgPath = await ApiCall(request, optionsGet);
+        movieImg.src = `https://media.themoviedb.org/t/p/w220_and_h330_face${data.results[i].poster_path}`;
+        movieImgContainer.appendChild(movieImg);
+        movieItem.appendChild(movieImgContainer);
 
-      let cardBody = document.createElement("div");
-      cardBody.className = "card-body";
-      let cardTitle = document.createElement("p");
-      cardTitle.className = "card-text fw-bold title m-1 p-0";
-      cardTitle.innerHTML = data.results[i].title;
-      cardBody.appendChild(cardTitle);
+        let cardBody = document.createElement("div");
+        cardBody.className = "card-body";
+        let cardTitle = document.createElement("p");
+        cardTitle.className = "card-text fw-bold title m-1 p-0";
+        cardTitle.innerHTML = data.results[i].title;
+        cardBody.appendChild(cardTitle);
 
-      let cardReleaseDate = document.createElement("p");
-      cardReleaseDate.className = "card-text date m-1 p-0";
-      //    let releaseDateRequest = `https://api.themoviedb.org/3/movie/${data.results[i].id}/release_dates`;
-      //    let releaseDate = await ApiCall(releaseDateRequest, optionsGet);
-      cardReleaseDate.innerHTML = data.results[i].release_date;
-      cardBody.appendChild(cardReleaseDate);
-      movieItem.appendChild(cardBody);
-      movieItem.appendChild(loadImgDescrption(data, i));
-      moviesPageContainer.appendChild(movieItem);
-
-
-    }
-    moviesContainer.appendChild(moviesPageContainer);
-  })
-  .catch((err) => console.error(err));
-
+        let cardReleaseDate = document.createElement("p");
+        cardReleaseDate.className = "card-text date m-1 p-0";
+        //    let releaseDateRequest = `https://api.themoviedb.org/3/movie/${data.results[i].id}/release_dates`;
+        //    let releaseDate = await ApiCall(releaseDateRequest, optionsGet);
+        cardReleaseDate.innerHTML = data.results[i].release_date;
+        cardBody.appendChild(cardReleaseDate);
+        movieItem.appendChild(cardBody);
+        movieItem.appendChild(loadImgDescrption(data, i));
+        moviesPageContainer.appendChild(movieItem);
+      }
+      moviesContainer.appendChild(moviesPageContainer);
+    })
+    .catch((err) => console.error(err));
 }
 loadTrendingData();
-
 
 const settingsIcon = document.querySelector("#settings-icon");
 const colorsContainer = document.querySelector(".setting");
@@ -299,10 +293,197 @@ document.documentElement.style.setProperty("--second-color", color_taken);
 settingsIcon.onclick = function () {
   colorsContainer.classList.toggle("visible");
 };
- document.querySelectorAll(".color").forEach((item) => {
-   item.addEventListener("click", (event) => {
-     const color = event.target.getAttribute("data-color");
-     document.documentElement.style.setProperty("--second-color", color);
-     localStorage.setItem("color", color);
-   });
- });
+document.querySelectorAll(".color").forEach((item) => {
+  item.addEventListener("click", (event) => {
+    const color = event.target.getAttribute("data-color");
+    document.documentElement.style.setProperty("--second-color", color);
+    localStorage.setItem("color", color);
+  });
+});
+
+let alertContent = [
+  {
+    type: "text",
+    valid:false,
+    required: true,
+    id: "userName",
+    class: "form-control",
+    placeholder: "Enter your Name",
+  },
+  {
+    type: "email",
+    valid:false,
+    required: true,
+    id: "userEmail",
+    class: "form-control",
+    placeholder: "Enter your email",
+  },
+  {
+    type: "number",
+    valid:false,
+    required: true,
+    id: "userPhone",
+    class: "form-control",
+    placeholder: "Enter your Phone",
+  },
+  {
+    type: "userAge",
+    valid:false,
+    required: true,
+    id: "userAge",
+    class: "form-control",
+    placeholder: "Enter your Age",
+  },
+
+  {
+    type: "password",
+    valid:false,
+    required: true,
+    id: "userPassword",
+    class: "form-control",
+    placeholder: "Enter your Password",
+  },
+  {
+    type: "password",
+    valid:false,
+    required: true,
+    id: "userValidationPassword",
+    class: "form-control",
+    placeholder: "Enter your ValidationPassword",
+  },
+];
+
+function creatingAlertContainer() {
+  let container = document.querySelector("#conatct-us");
+  let contactUs = document.createElement("div");
+  contactUs.className = "conatctUs";
+  let header = document.createElement("div");
+  header.className = "header";
+  let inputTitel = document.createElement("p");
+  inputTitel.innerHTML = "Contact Us";
+  inputTitel.id = "input-title";
+  header.appendChild(inputTitel);
+  contactUs.appendChild(header);
+  let inputs = document.createElement("div");
+  inputs.className = "inputs";
+  for (let i = 0; i < alertContent.length; i++) {
+    let inputcontainer = document.createElement("div");
+    inputcontainer.className = "input";
+    let input = document.createElement("input");
+    input.className = alertContent[i].class;
+    input.id = alertContent[i].id;
+    input.type = alertContent[i].type;
+    input.placeholder = alertContent[i].placeholder;
+    inputcontainer.appendChild(input);
+
+    let inputAlert = document.createElement("div");
+    inputAlert.className = "input-alert d-none";
+    inputAlert.id = `${alertContent[i].id}-alter-container`;
+    let inputAlertText = document.createElement("p");
+    inputAlertText.innerHTML = alertContent[i].text;
+    inputAlertText.id = `${alertContent[i].id}-alert-message`;
+    inputAlert.appendChild(inputAlertText);
+    inputcontainer.appendChild(inputAlert);
+    inputs.appendChild(inputcontainer);
+  }
+  contactUs.appendChild(inputs);
+  container.appendChild(contactUs);
+}
+creatingAlertContainer();
+
+let inputName = document.querySelector("#userName");
+ inputName.onfocus = () => {
+   let userValidationName = document.querySelector("#userName").value;
+   let alertContainer = document.querySelector("#userName-alter-container");
+   let userValidationNameAlert = document.querySelector(
+     "#userName-alert-message"
+   );
+   if (userValidationName.length < 4) {
+     // console.log(userValidationNameAlert);
+     userValidationNameAlert.innerHTML =
+       "Name must be at least 4 characters long";
+     alertContainer.classList.replace("d-none", "d-flex");
+   } else {
+     alertContainer.classList.replace("d-flex", "d-none");
+   }
+ };
+inputName.onblur = () => {
+  let alertContainer = document.querySelector("#userName-alter-container");
+  alertContainer.classList.replace("d-flex", "d-none");
+};
+
+let inputEmail = document.querySelector("#userEmail");
+inputName.onfocus = () => {
+  let userValidationName = document.querySelector("#userName").value;
+  let alertContainer = document.querySelector("#userName-alter-container");
+  let userValidationNameAlert = document.querySelector(
+    "#userName-alert-message"
+  );
+  if (userValidationName.length < 4) {
+    // console.log(userValidationNameAlert);
+    userValidationNameAlert.innerHTML =
+      "Name must be at least 4 characters long";
+    alertContainer.classList.replace("d-none", "d-flex");
+  } else {
+    alertContainer.classList.replace("d-flex", "d-none");
+  }
+};
+inputEmail.onblur = () => {
+  let alertContainer = document.querySelector("#userName-alter-container");
+  alertContainer.classList.replace("d-flex", "d-none");
+};
+
+async function fetchValidationData() {
+  try {
+    const response = await fetch("./APIs/validations.json");
+    const data = await response.json();
+    validation(data);
+  } catch (error) {
+    console.error("Error fetching validation data:", error);
+  }
+}
+fetchValidationData();
+function validation(data) {
+  data.forEach((inputData) => {
+    const inputItem = document.querySelector(inputData.itemID);
+
+    inputItem.oninput = inputItem.onfocus = () => {
+      const inputValue = inputItem.value;
+      const alertContainer = document.querySelector(inputData.alertContainerId);
+      const alertMessage = document.querySelector(inputData.alertMessageId);
+
+      let isValid = true;
+
+      if (inputData.itemID === "#userValidationPassword") {
+        const originalPassword = document.querySelector("#userPassword").value;
+        if (inputValue !== originalPassword) {
+          alertMessage.innerHTML = "Passwords do not match.";
+          alertContainer.classList.replace("d-none", "d-flex");
+          isValid = false;
+        }
+      } else {
+        for (const validation of inputData.validations) {
+          const regex = new RegExp(validation.pattern);
+          if (!regex.test(inputValue)) {
+            console.log(inputValue);
+            console.log(regex);
+            alertMessage.innerHTML = validation.message;
+            alertContainer.classList.replace("d-none", "d-flex");
+            isValid = false;
+            break;
+          }
+        }
+      }
+      if (isValid) {
+        alertContainer.classList.replace("d-flex", "d-none");
+      }
+    };
+
+    inputItem.onblur = () => {
+      const alertContainer = document.querySelector(inputData.alertContainerId);
+      alertContainer.classList.replace("d-flex", "d-none");
+    };
+  });
+}
+
+

@@ -1,0 +1,83 @@
+[
+  {
+    "itemID": "#userName",
+    "alertContainerId": "#userName-alter-container",
+    "alertMessageId": "#userName-alert-message",
+    "validations": [
+      {
+        "pattern": "^.{4,}$",
+        "message": "Name must be more than 4 characters long"
+      },
+      {
+        "pattern": "^[a-zA-Z0-9 ]*$",
+        "message": "Name must not contain special characters"
+      }
+    ]
+  },
+  {
+    "itemID": "#userEmail",
+    "alertContainerId": "#userEmail-alter-container",
+    "alertMessageId": "#userEmail-alert-message",
+    "validations": [
+      {
+        "pattern": "^[a-zA-Z0-9._%+-]+\\@[a-zA-Z]+\\.[a-zA-Z]+$",
+        "message": "Please Inter Correct Email"
+      }
+    ]
+  },
+  {
+    "itemID": "#userPhone",
+    "alertContainerId": "#userPhone-alter-container",
+    "alertMessageId": "#userPhone-alert-message",
+    "validations": [
+      {
+        "pattern": "^(0111|010|012)\\d{7}$",
+        "message": "Please Inter Correct Phone Number"
+      }
+    ]
+  },
+  {
+    "itemID": "#userAge",
+    "alertContainerId": "#userAge-alter-container",
+    "alertMessageId": "#userAge-alert-message",
+    "validations": [  
+      {
+        "pattern": "^(0?[1-9]|[1-9][0-9])$",
+        "message": "Please Inter Correct Age"
+      }
+    ]
+  },
+  {
+    "itemID": "#userPassword",
+    "alertContainerId": "#userPassword-alter-container",
+    "alertMessageId": "#userPassword-alert-message",
+    "validations": [
+      {
+        "pattern": "^.{8,}$",
+        "message": "Password must be at least 8 characters long."
+      },
+      {
+        "pattern": "[A-Z]",
+        "message": "Password must contain at least one uppercase letter."
+      },
+      {
+        "pattern": "[a-z]",
+        "message": "Password must contain at least one lowercase letter."
+      },
+      {
+        "pattern": "[0-9]",
+        "message": "Password must contain at least one digit."
+      },
+      {
+        "pattern": "[\\W_]",
+        "message": "Password must contain at least one special character."
+      }
+    ]
+  },
+  {
+    "itemID": "#userValidationPassword",
+    "alertContainerId": "#userValidationPassword-alter-container",
+    "alertMessageId": "#userValidationPassword-alert-message",
+    "validations": "must match real password"
+  }
+]
