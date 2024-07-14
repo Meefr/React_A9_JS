@@ -138,7 +138,7 @@ function loadData(data) {
   moviesContainer.className = "container w-100";
   moviesContainer.innerHTML = "";
   let moviesPageContainer = document.createElement("div");
-  moviesPageContainer.className = "row bg-light gap-2 justify-content-center ";
+  moviesPageContainer.className = "row bg-light gap-4 justify-content-center ";
   moviesPageContainer.innerHTML = "";
   // moviesPageContainer.id = `page#${pageIndex}`;
   console.log(data.results[0].poster_path);
@@ -146,7 +146,7 @@ function loadData(data) {
     console.log("here");
     let movieItem = document.createElement("div");
     movieItem.className =
-      "card col-12 col-sm-6 col-md-3 col-lg-2 text-center shadow bg-body-tertiary rounded object-fit-cover p-0";
+      "card col-12  col-md-3  text-center shadow bg-body-tertiary rounded object-fit-cover p-0";
     let movieImgContainer = document.createElement("div");
     movieImgContainer.className = "card-img-container";
     // movieImgContainer.onmouseover = () => chaningingImgs(data.results[i].id);
