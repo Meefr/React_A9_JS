@@ -1,20 +1,43 @@
 // golbal variables
 var color_taken = localStorage.getItem("color");
+let base_url = "https://api.themoviedb.org/3/";
+
+
 var pageIndex = 1;
 const options = {
   method: "GET",
   headers: {
     accept: "application/json",
     Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YWEyODFjZjBkNzgwYmE2MTJlOGU1YmE5NTU3NmJiMSIsIm5iZiI6MTcyMDg2NTU4My45MjQ1NzksInN1YiI6IjY2OTI1MTI3NjIyZDc4ODU5NTVlOGJlOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.lx2D2RyELpwPD-xsNK-Ky3t56WneQ8Rcb5O-UwIo_XM",
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YWEyODFjZjBkNzgwYmE2MTJlOGU1YmE5NTU3NmJiMSIsIm5iZiI6MTcyMDg2NTU4My45MjQ1NzksInN1YiI6IjY2OTI1MTI3NjIyZDc4ODU5NTVlOGJlOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.lx2D2RyELpwPD-xsNK-Ky3t56WneQ8Rcb5O-UwIo_XM",
   },
 };
-async function ApiCall(request, options) {
-  const response = fetch(request, options)
-    .then((response) => response.json())
-    .then((response) => response)
-    .catch((err) => console.error(err));
-  return response;
+
+ApiCall("trending");
+async function ApiCall(requestTitle, serchinput = "") {
+  switch (requestTitle) {
+    case "trending":
+      fetch(
+        "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
+        options
+      )
+      .then((response) => response.json())
+      .then((response) => response)
+      .then((data) => {
+        loadData(data);
+      })
+      .catch((err) => console.error(err));
+      break;
+      case "search":
+        const request = `https://api.themoviedb.org/3/search/movie?query=${serchinput}&include_adult=false&language=en-US&page=1`;
+        fetch(request, options)
+        .then((response) => response.json())
+        .then((response) => response)
+        .then((data) => {
+          loadData(data);
+        });
+      break;
+  }
 }
 
 var button = document.querySelector("#search-button");
@@ -26,7 +49,7 @@ button.onclick = async () => {
     backButton.classList.replace("d-felx", "d-none");
     let input = document.querySelector("#search-input");
     input.value = "";
-    loadTrendingData();
+    ApiCall("trending");
   };
   var input = document.querySelector("#search-input").value;
   if (input.length >= 3) {
@@ -39,127 +62,9 @@ button.onclick = async () => {
       },
     };
     input = input.replace(/ /g, "%20");
-    const request = `https://api.themoviedb.org/3/search/keyword?query=${input}&page=1`;
-    fetch(request, options)
-      .then((response) => response.json())
-      .then((response) => response)
-      .then((data) => {
-        console.log(data);
-        let moviesContainer = document.querySelector("#movies-container");
-        moviesContainer.className = "container w-100";
-        moviesContainer.innerHTML = "";
-        let moviesPageContainer = document.createElement("div");
-        moviesPageContainer.className =
-          "row bg-light gap-2 justify-content-center";
-        moviesPageContainer.innerHTML = "";
-        // moviesPageContainer.id = `page#${pageIndex}`;
-        console.log(data.results[0].poster_path);
-        for (let i = 0; i < data.results.length; i++) {
-          console.log("here");
-          let movieItem = document.createElement("div");
-          movieItem.className =
-            "card col-12 col-sm-6 col-md-3 col-lg-2 text-center shadow bg-body-tertiary rounded object-fit-cover p-0";
-          let movieImgContainer = document.createElement("div");
-          movieImgContainer.className = "card-img-container";
-          let movieImg = document.createElement("img");
-          movieImg.id = "card-img";
-          movieImg.className = "card-img-top";
-          //  let imgPath = await ApiCall(request, optionsGet);
-          const options = {
-            method: "GET",
-            headers: {
-              accept: "application/json",
-              Authorization:
-                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YWEyODFjZjBkNzgwYmE2MTJlOGU1YmE5NTU3NmJiMSIsIm5iZiI6MTcyMDg2NTU4My45MjQ1NzksInN1YiI6IjY2OTI1MTI3NjIyZDc4ODU5NTVlOGJlOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.lx2D2RyELpwPD-xsNK-Ky3t56WneQ8Rcb5O-UwIo_XM",
-            },
-          };
-
-          fetch(
-            `https://api.themoviedb.org/3/movie/${data.results[i].id}/images?include_image_language=en&language=english`,
-            options
-          )
-            .then((response) => response.json())
-            .then((response) => response)
-            .then((data) => {
-              movieImg.src = `https://media.themoviedb.org/t/p/w220_and_h330_face${data.backdrops[0].file_path}`;
-              movieImgContainer.appendChild(movieImg);
-              movieItem.appendChild(movieImgContainer);
-            });
-
-          let cardBody = document.createElement("div");
-          cardBody.className = "card-body";
-          let cardTitle = document.createElement("p");
-          cardTitle.className = "card-text fw-bold title m-1 p-0";
-          cardTitle.innerHTML = data.results[i].name;
-          cardBody.appendChild(cardTitle);
-
-          //   let cardReleaseDate = document.createElement("p");
-          //   cardReleaseDate.className = "card-text date m-1 p-0";
-          //   //    let releaseDateRequest = `https://api.themoviedb.org/3/movie/${data.results[i].id}/release_dates`;
-          //   //    let releaseDate = await ApiCall(releaseDateRequest, optionsGet);
-          //   cardReleaseDate.innerHTML = data.results[i].release_date;
-          //   cardBody.appendChild(cardReleaseDate);
-          movieItem.appendChild(cardBody);
-          moviesPageContainer.appendChild(movieItem);
-        }
-        moviesContainer.appendChild(moviesPageContainer);
-      });
-    //console.log(data.results)
+    ApiCall("search",searchinput = input);
   }
 };
-
-// var lastestButton = document.querySelector("#latest-movies");
-// lastestButton.onclick = () => {
-//   fetch("https://api.themoviedb.org/3/movie/latest", options)
-//     .then((response) => response.json())
-//     .then((response) => response)
-//     .then((data) => {
-//       console.log(data);
-//       let moviesContainer = document.querySelector("#movies-container");
-//       moviesContainer.className = "container w-100";
-//       moviesContainer.innerHTML = "";
-//       let moviesPageContainer = document.createElement("div");
-//       moviesPageContainer.className =
-//         "row bg-light gap-2 justify-content-center";
-//       moviesPageContainer.innerHTML = "";
-//       // moviesPageContainer.id = `page#${pageIndex}`;
-//       console.log(data.results[0].poster_path);
-//       for (let i = 0; i < data.results.length; i++) {
-//         console.log("here");
-//         let movieItem = document.createElement("div");
-//         movieItem.className =
-//           "card col-12 col-sm-6 col-md-3 col-lg-2 text-center shadow bg-body-tertiary rounded object-fit-cover p-0";
-//         let movieImgContainer = document.createElement("div");
-//         movieImgContainer.className = "card-img-container";
-//         let movieImg = document.createElement("img");
-//         movieImg.id = "card-img";
-//         movieImg.className = "card-img-top";
-//         //  let request = `https://api.themoviedb.org/3/movie/${data.results[i].id}/images?include_image_language=en&language=english`;
-//         //  let imgPath = await ApiCall(request, optionsGet);
-//         movieImg.src = `https://media.themoviedb.org/t/p/w220_and_h330_face${data.results[i].poster_path}`;
-//         movieImgContainer.appendChild(movieImg);
-//         movieItem.appendChild(movieImgContainer);
-
-//         let cardBody = document.createElement("div");
-//         cardBody.className = "card-body";
-//         let cardTitle = document.createElement("p");
-//         cardTitle.className = "card-text fw-bold title m-1 p-0";
-//         cardTitle.innerHTML = data.results[i].title;
-//         cardBody.appendChild(cardTitle);
-
-//         let cardReleaseDate = document.createElement("p");
-//         cardReleaseDate.className = "card-text date m-1 p-0";
-//         //    let releaseDateRequest = `https://api.themoviedb.org/3/movie/${data.results[i].id}/release_dates`;
-//         //    let releaseDate = await ApiCall(releaseDateRequest, optionsGet);
-//         cardReleaseDate.innerHTML = data.results[i].release_date;
-//         cardBody.appendChild(cardReleaseDate);
-//         movieItem.appendChild(cardBody);
-//         moviesPageContainer.appendChild(movieItem);
-//       }
-//       moviesContainer.appendChild(moviesPageContainer);
-//     })
-//     .catch((err) => console.error(err));
-// };
 
 function chaningingImgs(index) {
   fetch(
@@ -179,8 +84,6 @@ function chaningingImgs(index) {
     })
     .catch((err) => console.error(err));
 }
-
-let data = [];
 
 function loadImgDescrption(data, index) {
   let description = document.createElement("div");
@@ -230,62 +133,51 @@ function loadImgDescrption(data, index) {
   return description;
 }
 
-function loadTrendingData() {
-  fetch(
-    "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
-    options
-  )
-    .then((response) => response.json())
-    .then((response) => response)
-    .then((data) => {
-      let moviesContainer = document.querySelector("#movies-container");
-      moviesContainer.className = "container w-100";
-      moviesContainer.innerHTML = "";
-      let moviesPageContainer = document.createElement("div");
-      moviesPageContainer.className =
-        "row bg-light gap-2 justify-content-center";
-      moviesPageContainer.innerHTML = "";
-      // moviesPageContainer.id = `page#${pageIndex}`;
-      console.log(data.results[0].poster_path);
-      for (let i = 0; i < data.results.length; i++) {
-        console.log("here");
-        let movieItem = document.createElement("div");
-        movieItem.className =
-          "card col-12 col-sm-6 col-md-3 col-lg-2 text-center shadow bg-body-tertiary rounded object-fit-cover p-0";
-        let movieImgContainer = document.createElement("div");
-        movieImgContainer.className = "card-img-container";
-        // movieImgContainer.onmouseover = () => chaningingImgs(data.results[i].id);
-        let movieImg = document.createElement("img");
-        movieImg.id = data.results[i].id;
-        movieImg.className = "card-img-top";
-        //  let request = `https://api.themoviedb.org/3/movie/${data.results[i].id}/images?include_image_language=en&language=english`;
-        //  let imgPath = await ApiCall(request, optionsGet);
-        movieImg.src = `https://media.themoviedb.org/t/p/w220_and_h330_face${data.results[i].poster_path}`;
-        movieImgContainer.appendChild(movieImg);
-        movieItem.appendChild(movieImgContainer);
+function loadData(data) {
+  let moviesContainer = document.querySelector("#movies-container");
+  moviesContainer.className = "container w-100";
+  moviesContainer.innerHTML = "";
+  let moviesPageContainer = document.createElement("div");
+  moviesPageContainer.className = "row bg-light gap-2 justify-content-center ";
+  moviesPageContainer.innerHTML = "";
+  // moviesPageContainer.id = `page#${pageIndex}`;
+  console.log(data.results[0].poster_path);
+  for (let i = 0; i < data.results.length; i++) {
+    console.log("here");
+    let movieItem = document.createElement("div");
+    movieItem.className =
+      "card col-12 col-sm-6 col-md-3 col-lg-2 text-center shadow bg-body-tertiary rounded object-fit-cover p-0";
+    let movieImgContainer = document.createElement("div");
+    movieImgContainer.className = "card-img-container";
+    // movieImgContainer.onmouseover = () => chaningingImgs(data.results[i].id);
+    let movieImg = document.createElement("img");
+    movieImg.id = data.results[i].id;
+    movieImg.className = "card-img-top";
+    //  let request = `https://api.themoviedb.org/3/movie/${data.results[i].id}/images?include_image_language=en&language=english`;
+    //  let imgPath = await ApiCall(request, optionsGet);
+    movieImg.src = `https://media.themoviedb.org/t/p/w220_and_h330_face${data.results[i].poster_path}`;
+    movieImgContainer.appendChild(movieImg);
+    movieItem.appendChild(movieImgContainer);
 
-        let cardBody = document.createElement("div");
-        cardBody.className = "card-body";
-        let cardTitle = document.createElement("p");
-        cardTitle.className = "card-text fw-bold title m-1 p-0";
-        cardTitle.innerHTML = data.results[i].title;
-        cardBody.appendChild(cardTitle);
+    let cardBody = document.createElement("div");
+    cardBody.className = "card-body";
+    let cardTitle = document.createElement("p");
+    cardTitle.className = "card-text fw-bold title m-1 p-0";
+    cardTitle.innerHTML = data.results[i].title;
+    cardBody.appendChild(cardTitle);
 
-        let cardReleaseDate = document.createElement("p");
-        cardReleaseDate.className = "card-text date m-1 p-0";
-        //    let releaseDateRequest = `https://api.themoviedb.org/3/movie/${data.results[i].id}/release_dates`;
-        //    let releaseDate = await ApiCall(releaseDateRequest, optionsGet);
-        cardReleaseDate.innerHTML = data.results[i].release_date;
-        cardBody.appendChild(cardReleaseDate);
-        movieItem.appendChild(cardBody);
-        movieItem.appendChild(loadImgDescrption(data, i));
-        moviesPageContainer.appendChild(movieItem);
-      }
-      moviesContainer.appendChild(moviesPageContainer);
-    })
-    .catch((err) => console.error(err));
+    let cardReleaseDate = document.createElement("p");
+    cardReleaseDate.className = "card-text date m-1 p-0";
+    //    let releaseDateRequest = `https://api.themoviedb.org/3/movie/${data.results[i].id}/release_dates`;
+    //    let releaseDate = await ApiCall(releaseDateRequest, optionsGet);
+    cardReleaseDate.innerHTML = data.results[i].release_date;
+    cardBody.appendChild(cardReleaseDate);
+    movieItem.appendChild(cardBody);
+    movieItem.appendChild(loadImgDescrption(data, i));
+    moviesPageContainer.appendChild(movieItem);
+  }
+  moviesContainer.appendChild(moviesPageContainer);
 }
-loadTrendingData();
 
 const settingsIcon = document.querySelector("#settings-icon");
 const colorsContainer = document.querySelector(".setting");
@@ -304,7 +196,7 @@ document.querySelectorAll(".color").forEach((item) => {
 let alertContent = [
   {
     type: "text",
-    valid:false,
+    valid: false,
     required: true,
     id: "userName",
     class: "form-control",
@@ -312,7 +204,7 @@ let alertContent = [
   },
   {
     type: "email",
-    valid:false,
+    valid: false,
     required: true,
     id: "userEmail",
     class: "form-control",
@@ -320,7 +212,7 @@ let alertContent = [
   },
   {
     type: "number",
-    valid:false,
+    valid: false,
     required: true,
     id: "userPhone",
     class: "form-control",
@@ -328,7 +220,7 @@ let alertContent = [
   },
   {
     type: "userAge",
-    valid:false,
+    valid: false,
     required: true,
     id: "userAge",
     class: "form-control",
@@ -337,7 +229,7 @@ let alertContent = [
 
   {
     type: "password",
-    valid:false,
+    valid: false,
     required: true,
     id: "userPassword",
     class: "form-control",
@@ -345,7 +237,7 @@ let alertContent = [
   },
   {
     type: "password",
-    valid:false,
+    valid: false,
     required: true,
     id: "userValidationPassword",
     class: "form-control",
@@ -392,27 +284,6 @@ function creatingAlertContainer() {
 creatingAlertContainer();
 
 let inputName = document.querySelector("#userName");
- inputName.onfocus = () => {
-   let userValidationName = document.querySelector("#userName").value;
-   let alertContainer = document.querySelector("#userName-alter-container");
-   let userValidationNameAlert = document.querySelector(
-     "#userName-alert-message"
-   );
-   if (userValidationName.length < 4) {
-     // console.log(userValidationNameAlert);
-     userValidationNameAlert.innerHTML =
-       "Name must be at least 4 characters long";
-     alertContainer.classList.replace("d-none", "d-flex");
-   } else {
-     alertContainer.classList.replace("d-flex", "d-none");
-   }
- };
-inputName.onblur = () => {
-  let alertContainer = document.querySelector("#userName-alter-container");
-  alertContainer.classList.replace("d-flex", "d-none");
-};
-
-let inputEmail = document.querySelector("#userEmail");
 inputName.onfocus = () => {
   let userValidationName = document.querySelector("#userName").value;
   let alertContainer = document.querySelector("#userName-alter-container");
@@ -428,10 +299,11 @@ inputName.onfocus = () => {
     alertContainer.classList.replace("d-flex", "d-none");
   }
 };
-inputEmail.onblur = () => {
+inputName.onblur = () => {
   let alertContainer = document.querySelector("#userName-alter-container");
   alertContainer.classList.replace("d-flex", "d-none");
 };
+
 
 async function fetchValidationData() {
   try {
@@ -447,7 +319,7 @@ function validation(data) {
   data.forEach((inputData) => {
     const inputItem = document.querySelector(inputData.itemID);
 
-    inputItem.oninput = inputItem.onfocus = () => {
+    inputItem.onblur = inputItem.onchange = () => {
       const inputValue = inputItem.value;
       const alertContainer = document.querySelector(inputData.alertContainerId);
       const alertMessage = document.querySelector(inputData.alertMessageId);
@@ -479,11 +351,9 @@ function validation(data) {
       }
     };
 
-    inputItem.onblur = () => {
+    inputItem.onfocus = () => {
       const alertContainer = document.querySelector(inputData.alertContainerId);
       alertContainer.classList.replace("d-flex", "d-none");
     };
   });
 }
-
-

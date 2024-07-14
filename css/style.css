@@ -81,7 +81,7 @@ body{
 
 .card:hover .description{
     top: 0;
-    animation: mymove 0.5s ;
+    /* animation: mymove 0.5s ; */
     opacity: 1;
 }
 @keyframes mymove {
