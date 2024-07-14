@@ -105,14 +105,21 @@ body{
     color: rgb(255, 0, 55);
 }
 #N{
-    color: aqua;
+    color: var(--second-color);
 }
 .searchcontainer{
     gap: 10px;
     display: flex;
     justify-content: center;
 }
-
+#search-button{
+    border-color: var(--second-color);
+    color: var(--second-color);
+}
+#search-button:hover{
+    background-color: var(--second-color) ;
+    color: white;
+}
 
 .setting{
     position: fixed;
