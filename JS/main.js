@@ -481,5 +481,8 @@ menuItems.forEach((item) => {
     if (searchSection) {
       searchSection.scrollIntoView({ behavior: "smooth" });
     }
+    let nav = document.querySelector(".navbar");
+    console.log(nav);
+    nav.classList.toggle("nav-visible");
   };
 });
