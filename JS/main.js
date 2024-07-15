@@ -127,8 +127,6 @@ async function ApiCall(requestTitle, serchinput = "", movieID = "") {
         .then((response) => response.json())
         .then((response) => response)
         .then((data) => {
-          console.log(movieID);
-          console.log(data);
           CreateMovieDetails(data);
         });
       break;
@@ -261,7 +259,7 @@ function loadData(data) {
     for (let i = 0; i < data.results.length; i++) {
       let movieItem = document.createElement("div");
       movieItem.className =
-        "card col-12  col-md-3  text-center shadow bg-body-tertiary rounded object-fit-cover p-0";
+        "card col-8  col-md-3  text-center shadow bg-body-tertiary rounded object-fit-cover p-0";
       movieItem.onclick = () => ApiCall(ApiQuery[8], "", data.results[i].id);
       let movieImgContainer = document.createElement("div");
       movieImgContainer.className = "card-img-container";
