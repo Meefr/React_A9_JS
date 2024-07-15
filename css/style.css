@@ -37,8 +37,9 @@ body{
     top: -10%;
     opacity: 0;
     left: 0;
-    transition: opacity 2s ease-in-out;
-    transition: top 0.1s ease-in-out;
+    /* transition: opacity 2s ease-in-out;
+    transition: top 0.1s ease-in-out; */
+    transition: 0.5s ease;
 }
 .description-bg{
     position: absolute;
