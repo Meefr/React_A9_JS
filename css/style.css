@@ -32,6 +32,7 @@ body{
 }
 .card{
     position: relative;
+    
 }
 .description {
     position: absolute;
@@ -348,4 +349,43 @@ body{
     100%{
         transform: translateY(100px);
     } */
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #e50914;
+    color: white;
+}
+
+.nav-tabs .nav-link {
+    color: white;
+}
+
+.img-thumbnail {
+    width: 100px;
+    height: auto;
+    border: none;
+}
+.fixed-center {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 1200px;
+}
+
+
+#movie-details {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; /* Increased width */
+    background-color: #212529;
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 1000;
+}
+#close-icon{
+    font-size: 30px;
 }

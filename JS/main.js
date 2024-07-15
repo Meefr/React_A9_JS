@@ -19,6 +19,7 @@ const ApiQuery = Object.freeze({
   5: "upcoming",
   6: "popular",
   7: "favorite",
+  8: "details",
 });
 
 const titleMap = {
@@ -40,7 +41,7 @@ const menuItems = [
 ];
 
 ApiCall("trending");
-async function ApiCall(requestTitle, serchinput = "") {
+async function ApiCall(requestTitle, serchinput = "", movieID = "") {
   switch (requestTitle) {
     case ApiQuery[1]:
       fetch(
@@ -116,6 +117,19 @@ async function ApiCall(requestTitle, serchinput = "") {
         .then((response) => response)
         .then((data) => {
           loadData(data);
+        });
+      break;
+    case ApiQuery[8]:
+      fetch(
+        `https://api.themoviedb.org/3/movie/${movieID}?language=en-US`,
+        options
+      )
+        .then((response) => response.json())
+        .then((response) => response)
+        .then((data) => {
+          console.log(movieID);
+          console.log(data);
+          CreateMovieDetails(data);
         });
       break;
   }
@@ -248,6 +262,7 @@ function loadData(data) {
       let movieItem = document.createElement("div");
       movieItem.className =
         "card col-12  col-md-3  text-center shadow bg-body-tertiary rounded object-fit-cover p-0";
+      movieItem.onclick = () => ApiCall(ApiQuery[8], "", data.results[i].id);
       let movieImgContainer = document.createElement("div");
       movieImgContainer.className = "card-img-container";
       // movieImgContainer.onmouseover = () => chaningingImgs(data.results[i].id);
@@ -270,7 +285,6 @@ function loadData(data) {
       cardTitle.innerHTML = data.results[i].title;
       cardBody.appendChild(cardTitle);
 
-      
       let cardReleaseDate = document.createElement("p");
       cardReleaseDate.className = "card-text date m-1 p-0";
       //    let releaseDateRequest = `https://api.themoviedb.org/3/movie/${data.results[i].id}/release_dates`;
@@ -493,3 +507,61 @@ menuItems.forEach((item) => {
     nav.classList.toggle("nav-visible");
   };
 });
+
+function CreateMovieDetails(data) {
+  let doc = document.querySelector("#movie-details");
+  let genres = data.genres.map((genre) => genre.name).join(", ");
+  let productionCompanies = data.production_companies
+    .map((company) => company.name)
+    .join(", ");
+
+  let str = `
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <div class="card bg-dark text-white border-0">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h2>${data.title}</h2>
+            <i class="fa-regular fa-circle-xmark" id="close-icon" onclick="closeMovieDetails()"></i>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4">
+                <img
+                  src="https://image.tmdb.org/t/p/w500${data.poster_path}"
+                  alt="${data.title}"
+                  class="img-fluid rounded"
+                />
+              </div>
+              <div class="col-md-8">
+                <p class="text-muted">${data.tagline}</p>
+                <p><strong>Overview:</strong> ${data.overview}</p>
+                <p><strong>Genres:</strong> ${genres}</p>
+                <p><strong>Release Date:</strong> ${data.release_date}</p>
+                <p><strong>Runtime:</strong> ${data.runtime} minutes</p>
+                <p><strong>Rating:</strong> ${
+                  data.vote_average
+                } <i class="fas fa-star text-warning"></i> (${
+    data.vote_count
+  } votes)</p>
+                <p><strong>Production Companies:</strong> ${productionCompanies}</p>
+                <p><strong>Budget:</strong> $${data.budget.toLocaleString()}</p>
+                <p><strong>Revenue:</strong> $${data.revenue.toLocaleString()}</p>
+                <a href="${
+                  data.homepage
+                }" class="btn btn-primary">Official Website</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  doc.classList.replace("d-none", "d-flex");
+  doc.innerHTML = str;
+}
+function closeMovieDetails() {
+  let doc = document.querySelector("#movie-details");
+  doc.classList.replace("d-flex", "d-none");
+  doc.innerHTML = "";
+}
