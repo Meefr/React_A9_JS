@@ -185,7 +185,7 @@ function chaningingImgs(index) {
 
 function loadImgDescrption(data, index) {
   let description = document.createElement("div");
-  description.className = "description overflow-hidden";
+  description.className = "description overflow-hidden rounded-2";
 
   let img = document.createElement("img");
   img.src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${data.results[index].backdrop_path}`;
@@ -198,7 +198,7 @@ function loadImgDescrption(data, index) {
   description.appendChild(darkLayer);
 
   let descriptionContent = document.createElement("div");
-  descriptionContent.className = "description-content";
+  descriptionContent.className = "description-content p-2";
 
   let title = document.createElement("p");
   title.className = "title";
@@ -237,7 +237,7 @@ function loadData(data) {
   moviesContainer.className = "container w-100";
   moviesContainer.innerHTML = "";
   let moviesPageContainer = document.createElement("div");
-  moviesPageContainer.className = "row bg-light gap-4 justify-content-center ";
+  moviesPageContainer.className = "row gap-4 justify-content-center ";
   moviesPageContainer.innerHTML = "";
   // moviesPageContainer.id = `page#${pageIndex}`;
   if (data.results.length != 0) {
@@ -260,6 +260,9 @@ function loadData(data) {
       movieImgContainer.appendChild(movieImg);
       movieItem.appendChild(movieImgContainer);
 
+      let cardItemContainer = document.createElement("div");
+      cardItemContainer.className = "card-item-container";
+
       let cardBody = document.createElement("div");
       cardBody.className = "card-body";
       let cardTitle = document.createElement("p");
@@ -267,14 +270,16 @@ function loadData(data) {
       cardTitle.innerHTML = data.results[i].title;
       cardBody.appendChild(cardTitle);
 
+      
       let cardReleaseDate = document.createElement("p");
       cardReleaseDate.className = "card-text date m-1 p-0";
       //    let releaseDateRequest = `https://api.themoviedb.org/3/movie/${data.results[i].id}/release_dates`;
       //    let releaseDate = await ApiCall(releaseDateRequest, optionsGet);
       cardReleaseDate.innerHTML = data.results[i].release_date;
       cardBody.appendChild(cardReleaseDate);
-      movieItem.appendChild(cardBody);
-      movieItem.appendChild(loadImgDescrption(data, i));
+      cardItemContainer.appendChild(cardBody);
+      cardItemContainer.appendChild(loadImgDescrption(data, i));
+      movieItem.appendChild(cardItemContainer);
       moviesPageContainer.appendChild(movieItem);
     }
     moviesContainer.appendChild(moviesPageContainer);
@@ -358,7 +363,7 @@ function creatingAlertContainer() {
   let contactUs = document.createElement("div");
   contactUs.className = "conatctUs";
   let header = document.createElement("div");
-  header.className = "header";
+  header.className = "header pb-5 pt-3";
   let inputTitel = document.createElement("p");
   inputTitel.innerHTML = "Contact Us";
   inputTitel.id = "input-title";
