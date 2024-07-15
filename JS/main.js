@@ -124,17 +124,17 @@ async function ApiCall(requestTitle, serchinput = "") {
 // Searching part //
 
 async function searchQuery() {
-  let backButton = document.querySelector("#back-button");
-  backButton.classList.replace("d-none", "d-felx");
-  input;
-  backButton.onclick = () => {
-    backButton.classList.replace("d-felx", "d-none");
-    let input = document.querySelector("#search-input");
-    input.value = "";
-    ApiCall(ApiQuery[1]);
-  };
   var input = document.querySelector("#search-input").value;
   if (input.length >= 3) {
+    let backButton = document.querySelector("#back-button");
+    backButton.classList.replace("d-none", "d-felx");
+    input;
+    backButton.onclick = () => {
+      backButton.classList.replace("d-felx", "d-none");
+      let input = document.querySelector("#search-input");
+      input.value = "";
+      ApiCall(ApiQuery[1]);
+    };
     const options = {
       method: "GET",
       headers: {
