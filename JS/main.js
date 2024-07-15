@@ -127,7 +127,7 @@ async function searchQuery() {
   var input = document.querySelector("#search-input").value;
   if (input.length >= 3) {
     let moviesTitle = document.querySelector("#title");
-    moviesTitle.innerHTML = "Searchin results";
+    moviesTitle.innerHTML = "Searching results";
     let backButton = document.querySelector("#back-button");
     backButton.classList.replace("d-none", "d-felx");
     input;
