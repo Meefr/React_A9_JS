@@ -24,12 +24,8 @@
   <body>
     <div class="setting">
       <div class="content">
-        <div class="icon">
-          <i class="fa-solid fa-gear" id="settings-icon"></i>
-        </div>
-
         <div class="colors-container">
-          <div class="container">
+          <div class="container bg-light">
             <p id="pick-color">Pick Your Color:</p>
             <div class="row">
               <div class="col-3 color bg-light" data-color="#f0f0f0"></div>
@@ -43,12 +39,31 @@
             </div>
           </div>
         </div>
+        <div class="icon">
+          <i class="fa-solid fa-gear" id="settings-icon"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar">
+      <div class="navbar-menu">
+        <ul class="menu">
+          <li><a class="menu-item" id="nowPlaying">Now Paying</a></li>
+          <li><a class="menu-item" id="popular">Popular</a></li>
+          <li><a class="menu-item" id="topRated">Top Rated</a></li>
+          <li><a class="menu-item" id="favorite">Favorite</a></li>
+          <li><a class="menu-item" id="upcoming">Upcoming</a></li>
+          <li><a class="menu-item" href="#conatct-us">Conatct Us</a></li>
+        </ul>
+      </div>
+      <div class="nav-icon" id="nav-button">
+        <i class="fa-solid fa-bars" id="nav-icon"></i>
       </div>
     </div>
     <div class="searching py-5">
       <div class="searchcontainer py-5 d-flex flex-wrap">
         <h1><span id="M">M</span>ovies<span id="N">N</span>ews</h1>
-        <form class="d-flex" role="search">
+        <form class="d-flex" role="search" id="search-form">
           <input
             class="form-control me-2"
             type="search"
@@ -74,7 +89,18 @@
       </div>
     </div>
 
+    <div class="title py-5 bg-light">
+      <h1 id="title"></h1>
+    </div>
+
     <div class="py-5">
+      <div class="container d-none justify-content-center" id="notFound">
+        <div class="row">
+          <div class="col-12 py-3">
+            <p class="title">No Data Found</p>
+          </div>
+        </div>
+      </div>
       <div class="container" id="movies-container">
         <div id="" class="row bg-light gap-3 justify-content-center">
           <div

@@ -2,35 +2,117 @@
 var color_taken = localStorage.getItem("color");
 let base_url = "https://api.themoviedb.org/3/";
 
-
 var pageIndex = 1;
 const options = {
   method: "GET",
   headers: {
     accept: "application/json",
     Authorization:
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YWEyODFjZjBkNzgwYmE2MTJlOGU1YmE5NTU3NmJiMSIsIm5iZiI6MTcyMDg2NTU4My45MjQ1NzksInN1YiI6IjY2OTI1MTI3NjIyZDc4ODU5NTVlOGJlOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.lx2D2RyELpwPD-xsNK-Ky3t56WneQ8Rcb5O-UwIo_XM",
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YWEyODFjZjBkNzgwYmE2MTJlOGU1YmE5NTU3NmJiMSIsIm5iZiI6MTcyMDg2NTU4My45MjQ1NzksInN1YiI6IjY2OTI1MTI3NjIyZDc4ODU5NTVlOGJlOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.lx2D2RyELpwPD-xsNK-Ky3t56WneQ8Rcb5O-UwIo_XM",
   },
 };
+const ApiQuery = Object.freeze({
+  1: "trending",
+  2: "searching",
+  3: "nowPlaying",
+  4: "topRated",
+  5: "upcoming",
+  6: "popular",
+  7: "favorite",
+});
+
+const titleMap = {
+  topRated: "Top Rated",
+  nowPlaying: "Now Playing",
+  trending: "Trending",
+  upcoming: "Upcoming",
+  popular: "Popular",
+  favorite: "Favorite",
+};
+
+
+const menuItems = [
+  "nowPlaying",
+  "popular",
+  "topRated",
+  "favorite",
+  "upcoming",
+  "favorite",
+];
 
 ApiCall("trending");
 async function ApiCall(requestTitle, serchinput = "") {
   switch (requestTitle) {
-    case "trending":
+    case ApiQuery[1]:
       fetch(
         "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
         options
       )
-      .then((response) => response.json())
-      .then((response) => response)
-      .then((data) => {
-        loadData(data);
-      })
-      .catch((err) => console.error(err));
+        .then((response) => response.json())
+        .then((response) => response)
+        .then((data) => {
+          loadData(data);
+        })
+        .catch((err) => console.error(err));
       break;
-      case "search":
-        const request = `https://api.themoviedb.org/3/search/movie?query=${serchinput}&include_adult=false&language=en-US&page=1`;
-        fetch(request, options)
+    case ApiQuery[2]:
+      const request = `https://api.themoviedb.org/3/search/movie?query=${serchinput}&include_adult=false&language=en-US&page=1`;
+      fetch(request, options)
+        .then((response) => response.json())
+        .then((response) => response)
+        .then((data) => {
+          loadData(data);
+        });
+      break;
+    case ApiQuery[3]:
+      fetch(
+        "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1",
+        options
+      )
+        .then((response) => response.json())
+        .then((response) => response)
+        .then((data) => {
+          loadData(data);
+        });
+      break;
+    case ApiQuery[4]:
+      fetch(
+        "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
+        options
+      )
+        .then((response) => response.json())
+        .then((response) => response)
+        .then((data) => {
+          loadData(data);
+        });
+      break;
+    case ApiQuery[5]:
+      fetch(
+        "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1",
+        options
+      )
+        .then((response) => response.json())
+        .then((response) => response)
+        .then((data) => {
+          loadData(data);
+        });
+      break;
+    case ApiQuery[6]:
+      fetch(
+        "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
+        options
+      )
+        .then((response) => response.json())
+        .then((response) => response)
+        .then((data) => {
+          loadData(data);
+        });
+      break;
+    case ApiQuery[7]:
+      fetch(
+        "https://api.themoviedb.org/3/account/21380109/favorite/movies?language=en-US&page=1&sort_by=created_at.asc",
+        options
+      )
         .then((response) => response.json())
         .then((response) => response)
         .then((data) => {
@@ -40,8 +122,9 @@ async function ApiCall(requestTitle, serchinput = "") {
   }
 }
 
-var button = document.querySelector("#search-button");
-button.onclick = async () => {
+// Searching part //
+
+async function searchQuery() {
   let backButton = document.querySelector("#back-button");
   backButton.classList.replace("d-none", "d-felx");
   input;
@@ -49,7 +132,7 @@ button.onclick = async () => {
     backButton.classList.replace("d-felx", "d-none");
     let input = document.querySelector("#search-input");
     input.value = "";
-    ApiCall("trending");
+    ApiCall(ApiQuery[1]);
   };
   var input = document.querySelector("#search-input").value;
   if (input.length >= 3) {
@@ -62,8 +145,22 @@ button.onclick = async () => {
       },
     };
     input = input.replace(/ /g, "%20");
-    ApiCall("search",searchinput = input);
+    ApiCall(ApiQuery[2], (searchinput = input));
   }
+}
+
+var button = document.querySelector("#search-button");
+button.onclick = searchQuery;
+var searchInput = document.querySelector("#search-input");
+searchInput.type = button;
+
+searchInput.onkeydown = async (event) => {
+  if (event.keyCode === 13) {
+    searchQuery();
+  }
+};
+document.querySelector("#search-form").onsubmit = (event) => {
+  event.preventDefault();
 };
 
 function chaningingImgs(index) {
@@ -87,7 +184,7 @@ function chaningingImgs(index) {
 
 function loadImgDescrption(data, index) {
   let description = document.createElement("div");
-  description.className = "description";
+  description.className = "description overflow-hidden";
 
   let img = document.createElement("img");
   img.src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${data.results[index].backdrop_path}`;
@@ -134,6 +231,7 @@ function loadImgDescrption(data, index) {
 }
 
 function loadData(data) {
+  let doc = document.querySelector("#notFound");
   let moviesContainer = document.querySelector("#movies-container");
   moviesContainer.className = "container w-100";
   moviesContainer.innerHTML = "";
@@ -141,9 +239,11 @@ function loadData(data) {
   moviesPageContainer.className = "row bg-light gap-4 justify-content-center ";
   moviesPageContainer.innerHTML = "";
   // moviesPageContainer.id = `page#${pageIndex}`;
-  console.log(data.results[0].poster_path);
+  if(data.results.length != 0){
+      doc.classList.replace("d-flex", "d-none");
+  // console.log(data.results[0].poster_path);
+
   for (let i = 0; i < data.results.length; i++) {
-    console.log("here");
     let movieItem = document.createElement("div");
     movieItem.className =
       "card col-12  col-md-3  text-center shadow bg-body-tertiary rounded object-fit-cover p-0";
@@ -178,6 +278,12 @@ function loadData(data) {
   }
   moviesContainer.appendChild(moviesPageContainer);
 }
+else {
+  doc.classList.replace("d-none","d-flex");
+}
+}
+
+// setting icon and color changing part //
 
 const settingsIcon = document.querySelector("#settings-icon");
 const colorsContainer = document.querySelector(".setting");
@@ -192,6 +298,8 @@ document.querySelectorAll(".color").forEach((item) => {
     localStorage.setItem("color", color);
   });
 });
+
+// input validation part //
 
 let alertContent = [
   {
@@ -304,7 +412,6 @@ inputName.onblur = () => {
   alertContainer.classList.replace("d-flex", "d-none");
 };
 
-
 async function fetchValidationData() {
   try {
     const response = await fetch("./APIs/validations.json");
@@ -357,3 +464,21 @@ function validation(data) {
     };
   });
 }
+
+//navbar part//
+let navbutton = document.querySelector("#nav-button");
+navbutton.onclick = () => {
+  let nav = document.querySelector(".navbar");
+  console.log(nav);
+  nav.classList.toggle("nav-visible");
+};
+
+menuItems.forEach((item) => {
+  let doc = document.querySelector(`#${item}`);
+  doc.onclick = () => {
+    let moviesTitle = document.querySelector("#title");
+    moviesTitle.innerHTML = titleMap[item];
+    ApiCall(item);
+  };
+});
+
