@@ -259,7 +259,7 @@ function loadData(data) {
     for (let i = 0; i < data.results.length; i++) {
       let movieItem = document.createElement("div");
       movieItem.className =
-        "card col-8  col-md-3  text-center shadow bg-body-tertiary rounded object-fit-cover p-0";
+        "card col-8  col-md-3  text-center shadow rounded object-fit-cover p-0";
       movieItem.onclick = () => ApiCall(ApiQuery[8], "", data.results[i].id);
       let movieImgContainer = document.createElement("div");
       movieImgContainer.className = "card-img-container";
@@ -563,3 +563,13 @@ function closeMovieDetails() {
   doc.classList.replace("d-flex", "d-none");
   doc.innerHTML = "";
 }
+
+document
+  .getElementById("darkModeToggle")
+  .addEventListener("change", function () {
+    if (this.checked) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
+  });

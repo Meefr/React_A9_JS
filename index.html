@@ -22,13 +22,20 @@
     <title>Document</title>
   </head>
   <body>
+    <div class="container d-flex position-fixed end-0 switch-container">
+        <label class="switch">
+            <input type="checkbox" id="darkModeToggle">
+            <span class="slider"></span>
+        </label>
+    </div>
+
     <div class="setting">
       <div class="content">
         <div class="colors-container">
-          <div class="container bg-light">
+          <div class="container">
             <p id="pick-color">Pick Your Color:</p>
             <div class="row">
-              <div class="col-3 color bg-light" data-color="#f0f0f0"></div>
+              <div class="col-3 color" data-color="#f0f0f0"></div>
               <div class="col-3 color bg-red" data-color="#FF30A9"></div>
               <div class="col-3 color bg-blue" data-color="#3078FF"></div>
               <div class="col-3 color bg-green" data-color="#30FFA9"></div>
@@ -98,7 +105,7 @@
       </div>
     </div>
 
-    <div class="title py-5 bg-light">
+    <div class="title py-5">
       <h1 id="title">Trendings</h1>
     </div>
 
@@ -111,7 +118,7 @@
         </div>
       </div>
       <div class="container" id="movies-container">
-        <!-- <div id="" class="row bg-light gap-3 justify-content-center">
+        <!-- <div id="" class="row gap-3 justify-content-center">
           <div
             class="card col-12 col-sm-6 col-md-3 col-lg-2 text-center shadow bg-body-tertiary rounded object-fit-cover p-0"
           >
