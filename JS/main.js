@@ -30,7 +30,6 @@ const titleMap = {
   favorite: "Favorite",
 };
 
-
 const menuItems = [
   "nowPlaying",
   "popular",
@@ -239,48 +238,47 @@ function loadData(data) {
   moviesPageContainer.className = "row bg-light gap-4 justify-content-center ";
   moviesPageContainer.innerHTML = "";
   // moviesPageContainer.id = `page#${pageIndex}`;
-  if(data.results.length != 0){
-      doc.classList.replace("d-flex", "d-none");
-  // console.log(data.results[0].poster_path);
+  if (data.results.length != 0) {
+    doc.classList.replace("d-flex", "d-none");
+    // console.log(data.results[0].poster_path);
 
-  for (let i = 0; i < data.results.length; i++) {
-    let movieItem = document.createElement("div");
-    movieItem.className =
-      "card col-12  col-md-3  text-center shadow bg-body-tertiary rounded object-fit-cover p-0";
-    let movieImgContainer = document.createElement("div");
-    movieImgContainer.className = "card-img-container";
-    // movieImgContainer.onmouseover = () => chaningingImgs(data.results[i].id);
-    let movieImg = document.createElement("img");
-    movieImg.id = data.results[i].id;
-    movieImg.className = "card-img-top";
-    //  let request = `https://api.themoviedb.org/3/movie/${data.results[i].id}/images?include_image_language=en&language=english`;
-    //  let imgPath = await ApiCall(request, optionsGet);
-    movieImg.src = `https://media.themoviedb.org/t/p/w220_and_h330_face${data.results[i].poster_path}`;
-    movieImgContainer.appendChild(movieImg);
-    movieItem.appendChild(movieImgContainer);
+    for (let i = 0; i < data.results.length; i++) {
+      let movieItem = document.createElement("div");
+      movieItem.className =
+        "card col-12  col-md-3  text-center shadow bg-body-tertiary rounded object-fit-cover p-0";
+      let movieImgContainer = document.createElement("div");
+      movieImgContainer.className = "card-img-container";
+      // movieImgContainer.onmouseover = () => chaningingImgs(data.results[i].id);
+      let movieImg = document.createElement("img");
+      movieImg.id = data.results[i].id;
+      movieImg.className = "card-img-top";
+      //  let request = `https://api.themoviedb.org/3/movie/${data.results[i].id}/images?include_image_language=en&language=english`;
+      //  let imgPath = await ApiCall(request, optionsGet);
+      movieImg.src = `https://media.themoviedb.org/t/p/w220_and_h330_face${data.results[i].poster_path}`;
+      movieImgContainer.appendChild(movieImg);
+      movieItem.appendChild(movieImgContainer);
 
-    let cardBody = document.createElement("div");
-    cardBody.className = "card-body";
-    let cardTitle = document.createElement("p");
-    cardTitle.className = "card-text fw-bold title m-1 p-0";
-    cardTitle.innerHTML = data.results[i].title;
-    cardBody.appendChild(cardTitle);
+      let cardBody = document.createElement("div");
+      cardBody.className = "card-body";
+      let cardTitle = document.createElement("p");
+      cardTitle.className = "card-text fw-bold title m-1 p-0";
+      cardTitle.innerHTML = data.results[i].title;
+      cardBody.appendChild(cardTitle);
 
-    let cardReleaseDate = document.createElement("p");
-    cardReleaseDate.className = "card-text date m-1 p-0";
-    //    let releaseDateRequest = `https://api.themoviedb.org/3/movie/${data.results[i].id}/release_dates`;
-    //    let releaseDate = await ApiCall(releaseDateRequest, optionsGet);
-    cardReleaseDate.innerHTML = data.results[i].release_date;
-    cardBody.appendChild(cardReleaseDate);
-    movieItem.appendChild(cardBody);
-    movieItem.appendChild(loadImgDescrption(data, i));
-    moviesPageContainer.appendChild(movieItem);
+      let cardReleaseDate = document.createElement("p");
+      cardReleaseDate.className = "card-text date m-1 p-0";
+      //    let releaseDateRequest = `https://api.themoviedb.org/3/movie/${data.results[i].id}/release_dates`;
+      //    let releaseDate = await ApiCall(releaseDateRequest, optionsGet);
+      cardReleaseDate.innerHTML = data.results[i].release_date;
+      cardBody.appendChild(cardReleaseDate);
+      movieItem.appendChild(cardBody);
+      movieItem.appendChild(loadImgDescrption(data, i));
+      moviesPageContainer.appendChild(movieItem);
+    }
+    moviesContainer.appendChild(moviesPageContainer);
+  } else {
+    doc.classList.replace("d-none", "d-flex");
   }
-  moviesContainer.appendChild(moviesPageContainer);
-}
-else {
-  doc.classList.replace("d-none","d-flex");
-}
 }
 
 // setting icon and color changing part //
@@ -479,8 +477,9 @@ menuItems.forEach((item) => {
     let moviesTitle = document.querySelector("#title");
     moviesTitle.innerHTML = titleMap[item];
     ApiCall(item);
+    let searchSection = document.querySelector("#search-section");
+    if (searchSection) {
+      searchSection.scrollIntoView({ behavior: "smooth" });
+    }
   };
 });
-
-
-
