@@ -197,7 +197,7 @@ function chaningingImgs(index) {
 
 function loadImgDescrption(data, index) {
   let description = document.createElement("div");
-  description.className = "description overflow-hidden rounded-2";
+  description.className = "description  overflow-auto rounded-2";
 
   let img = document.createElement("img");
   img.src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${data.results[index].backdrop_path}`;
@@ -461,8 +461,6 @@ function validation(data) {
         for (const validation of inputData.validations) {
           const regex = new RegExp(validation.pattern);
           if (!regex.test(inputValue)) {
-            console.log(inputValue);
-            console.log(regex);
             alertMessage.innerHTML = validation.message;
             alertContainer.classList.replace("d-none", "d-flex");
             isValid = false;
